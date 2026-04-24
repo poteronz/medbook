@@ -132,9 +132,16 @@ async function start() {
     }
   }
 
-  app.listen(PORT, () => {
-    console.log(`MedBook API запущен на http://localhost:${PORT}`);
-  });
+  app.listen(PORT, async () => {
+  console.log(`🏥 MedBook API запущен на порту ${PORT}`);
+  try {
+    const { seedDemoData } = require("./db/seedDemo");
+    await seedDemoData();
+    console.log("✅ База данных готова");
+  } catch (e) {
+    console.log("DB seed:", e.message);
+  }
+});
 }
 
 start().catch((error) => {
