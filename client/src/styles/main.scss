@@ -1,0 +1,191 @@
+@use "variables" as *;
+
+// ══════════════════════════════════════════════
+// MedBook — Global Styles (SCSS)
+// Дополнительный слой стилей поверх Tailwind
+// ══════════════════════════════════════════════
+
+// ── Base ──
+body {
+  font-family: $font-family;
+  color: $gray-900;
+  background-color: $gray-50;
+}
+
+// ── Modal overlay ──
+.modal-overlay {
+  @include overlay;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  background: white;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+  max-width: 28rem;
+  width: 90%;
+  padding: 2rem;
+  animation: slideUp 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  @include respond-to("md") {
+    width: 100%;
+  }
+}
+
+// ── Doctor card (SCSS version for report demonstration) ──
+.doctor-card {
+  @include card;
+
+  &__avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid $primary-light;
+  }
+
+  &__name {
+    font-size: $font-size-lg;
+    font-weight: 600;
+    color: $gray-900;
+    @include truncate;
+  }
+
+  &__specialty {
+    font-size: $font-size-sm;
+    color: $primary;
+    font-weight: 500;
+  }
+
+  &__rating {
+    @include flex-center;
+    gap: 0.25rem;
+    font-size: $font-size-sm;
+    color: $warning;
+  }
+
+  &__price {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    color: $gray-900;
+  }
+
+  &__btn {
+    @include button-primary;
+    width: 100%;
+    text-align: center;
+    margin-top: 0.75rem;
+    font-size: $font-size-sm;
+  }
+}
+
+// ── Time slot buttons ──
+.slot-btn {
+  padding: 0.5rem 1rem;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  font-weight: 500;
+  border: 1px solid $gray-200;
+  background: white;
+  color: $gray-700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: $primary;
+    color: $primary;
+    background: $primary-light;
+  }
+
+  &--selected {
+    background: $primary;
+    color: white;
+    border-color: $primary;
+
+    &:hover {
+      background: $primary-dark;
+    }
+  }
+
+  &--booked {
+    opacity: 0.4;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+}
+
+// ── Reminder card ──
+.reminder-card {
+  @include card;
+  border-left: 4px solid $primary;
+
+  &--urgent {
+    border-left-color: $danger;
+    animation: pulse-border 2s infinite;
+  }
+
+  &--soon {
+    border-left-color: $warning;
+  }
+}
+
+// ── Status badges ──
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: $font-size-xs;
+  font-weight: 600;
+
+  &--upcoming {
+    background: $primary-light;
+    color: $primary-dark;
+  }
+
+  &--completed {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  &--cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+}
+
+// ── Animations ──
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-border {
+  0%, 100% { border-left-color: $danger; }
+  50% { border-left-color: rgba($danger, 0.4); }
+}
+
+// ── Scrollbar ──
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: $gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $gray-300;
+  border-radius: 3px;
+
+  &:hover {
+    background: $gray-500;
+  }
+}
